@@ -9,19 +9,22 @@ function App() {
   return (
     <Router>
       <MainNavigation/>
-       <Switch>
-        <Route path="/" exact >
-          <Users/>
-        </Route>
-        <Route path="/:userId/places" exact>
-          <UserPlaces/>
-        </Route>
-        <Route path="/places/new" >
-          <NewPlace/>
-        </Route>
-        <Redirect to="/" />
-        </Switch>
+      <main>
+        <Switch>
+          <Route path="/" exact >
+            <Users/>
+          </Route>
+          <Route path="/:userId/places" exact>
+            <UserPlaces/>
+          </Route>
+          <Route path="/places/new" >
+            <NewPlace/>
+          </Route>
+          <Redirect to="/" />
+          </Switch>
+        </main>
       </Router>
+      
     )
 }
 
