@@ -4,7 +4,7 @@ import Button from '../../shared/components/FormElements/Button';
 import Input from '../../shared/components/FormElements/Input';
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from '../../shared/components/util/validators';
 
-import './NewPlace.css';
+import './PlaceForm .css';
 
 const formReducer = (state, action) =>{
     switch(action.type){
