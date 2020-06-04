@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {useParams} from 'react-router-dom';
 
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
-import {VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH} from '../../shared/components/util/validators'
+import {VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH} from '../../shared/components/util/validators';
+import {useForm} from '../../shared/components/hooks/form-hook';
 
 import './PlaceForm.css';
 
@@ -37,8 +38,36 @@ const DUMMY_PLACES = [
 ]
 
 const UpdatePlace = () => {
+    
     const placeId = useParams().placeId;
+    const [isLoading, setIsLoading]= useState(true)
+    
+    const [formState, inputHandler, setFormData] = useForm({
+        title: {
+            value: '',
+            isValid: false,
+        },
+        description: {
+            value: '',
+            isValid: false
+        }
+    },false);
+
     const indentifiedPlace = DUMMY_PLACES.find(p => p.id === placeId );
+
+    useEffect(() => {
+        setFormData({
+            title: {
+                value: indentifiedPlace.title,
+                isValid: true,
+            },
+            description: {
+                value: indentifiedPlace.description,
+                isValid: true
+            }
+        }, true);
+        setIsLoading(false);
+    },[setFormData,indentifiedPlace]); 
 
     if(!indentifiedPlace){
         return(
@@ -47,32 +76,45 @@ const UpdatePlace = () => {
             </div>
         )
     }
+    const placeUpdateSubmitHandler = (event) => {
+        event.preventDefault();
+        console.log(formState.inputs);
+    }
 
+    if(isLoading){
+        return(
+            <div className='center'>
+                <h2>Loading...</h2>
+            </div>
+        ) 
+    }
     return(
-        <form className='place-form'>
+        formState.inputs.title.value && (
+            <form className='place-form' onSubmit={placeUpdateSubmitHandler}>
             <Input 
                 type='text'
                 id='title'
                 label='Title'
                 element='input'
-                onInput={() => {}}
+                onInput={inputHandler}
                 validators={[VALIDATOR_REQUIRE()]}
                 errorText='please enter a valid title'
-                value={indentifiedPlace.title}
-                valid={true}
+                initialValue={formState.inputs.title.value}
+                initialValid={formState.inputs.title.isValid}
                 >
             </Input>
             <Input 
                 id='description'
                 element='textarea'
-                onInput={() => {}}
+                onInput={inputHandler}
                 validators={[VALIDATOR_MINLENGTH(5)]}
                 errorText='please enter a valid description'
-                value={indentifiedPlace.description}
-                valid={true}
+                initialValue={formState.inputs.description.value}
+                initialValid={formState.inputs.description.isValid}
                 />
-            <Button type='submit' disabled={true}>UPDATE PLACE</Button>
-        </form>
+            <Button type='submit' disabled={!formState.isValid}>UPDATE PLACE</Button>
+        </form>)
+        
     )
 }
 export default UpdatePlace;
