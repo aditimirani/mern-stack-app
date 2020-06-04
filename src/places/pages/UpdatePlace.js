@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {useParams} from 'react-router-dom';
 
+import Card from '../../shared/components/UIElements/Card'
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
 import {VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH} from '../../shared/components/util/validators';
@@ -24,7 +25,7 @@ const DUMMY_PLACES = [
     },
     {
         id: 'p2',
-        title: 'Empire State Building',
+        title: 'Emp. State Building',
         description: 'one of the most famous sky scrapper in the world',
         imageUrl:"https://lh5.googleusercontent.com/p/AF1QipO1LQRpgc0tNHhxmbcWWUpv88yjuTZvcwh6VjcJ=w408-h272-k-no",
         address: '20 W 34th St, New York, NY 10001',
@@ -56,6 +57,7 @@ const UpdatePlace = () => {
     const indentifiedPlace = DUMMY_PLACES.find(p => p.id === placeId );
 
     useEffect(() => {
+        if(indentifiedPlace){
         setFormData({
             title: {
                 value: indentifiedPlace.title,
@@ -67,12 +69,16 @@ const UpdatePlace = () => {
             }
         }, true);
         setIsLoading(false);
+        }
     },[setFormData,indentifiedPlace]); 
+
 
     if(!indentifiedPlace){
         return(
             <div className='center'>
-                <h2>Could not find the place</h2>
+                <Card>
+                    <h2>Could not find the place</h2>
+                </Card>
             </div>
         )
     }

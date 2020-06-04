@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import PlaceList from '../components/PlaceList'
+import PlaceList from '../components/PlaceList';
 
 const DUMMY_PLACES = [
     {
@@ -17,7 +17,7 @@ const DUMMY_PLACES = [
     },
     {
         id: 'p2',
-        title: 'Empire State Building',
+        title: 'Emp. State Building',
         imageUrl:"https://lh5.googleusercontent.com/p/AF1QipO1LQRpgc0tNHhxmbcWWUpv88yjuTZvcwh6VjcJ=w408-h272-k-no",
         address: '20 W 34th St, New York, NY 10001',
         location: {

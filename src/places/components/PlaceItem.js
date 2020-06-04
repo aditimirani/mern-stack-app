@@ -8,10 +8,24 @@ import './PlaceItem.css'
 
 const PlaceItem = (props) => {
     const [showMap, setShowMap] = useState(false);
+    const [showModal, setShowModal]=  useState(false);
 
     const openMapHandler = () => setShowMap(true);
 
     const closeMapHandler = () => setShowMap(false);
+
+    const showDeleteWarningHandler = () => {
+            setShowModal(true);
+    }
+    
+    const cancelDeleteHandler = () => {
+            setShowModal(false);
+    }
+
+    const confirmDeleteHandler = () => {
+        setShowModal(false);
+        console.log('deleting in progress');
+    }
 
     const {id,image, title,address, description} = props;
     return(
@@ -28,6 +42,14 @@ const PlaceItem = (props) => {
                     <h2>The Map</h2>
                 </div>
             </Modal>
+            <Modal  show={showModal} onCancel={cancelDeleteHandler} header="are you sure?" footerClass='place-item__modal-actions' footer={
+                <>
+                    <Button inverse onClick={cancelDeleteHandler}>Cancel</Button>
+                    <Button danger onClick={confirmDeleteHandler}>Confirm</Button>
+                </>
+            } >
+                <p> Do you want to proceed and delete this place? Please note that it cant be undone thereafter.</p>
+            </Modal>
             <li className='place-item'>
                 <Card>
                 <div className='place-item__image'>
@@ -41,7 +63,7 @@ const PlaceItem = (props) => {
                 <div className='place-item__actions'>
                     <Button danger onClick={openMapHandler}>View on map</Button>
                     <Button to={`/places/${id}`}>Edit</Button>
-                    <Button danger>Delete</Button>
+                    <Button danger onClick={showDeleteWarningHandler}>Delete</Button>
                 </div>
                 </Card>
             </li>
