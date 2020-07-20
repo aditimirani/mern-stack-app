@@ -70,7 +70,7 @@ const UpdatePlace = () => {
         }, true);
         setIsLoading(false);
         }
-    },[setFormData,indentifiedPlace]); 
+    },[indentifiedPlace, setFormData]); 
 
 
     if(!indentifiedPlace){
